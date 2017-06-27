@@ -98,7 +98,7 @@ bool LTexture::loadFromFile(std::string path) {
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL) {
 		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(),
-				IMG_GetError());
+		IMG_GetError());
 	} else {
 		//Color key image
 		SDL_SetColorKey(loadedSurface, SDL_TRUE,
@@ -169,8 +169,7 @@ bool init() {
 
 		//Create window
 		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED,
-				SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
-				SDL_WINDOW_SHOWN);
+		SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL) {
 			printf("Window could not be created! SDL Error: %s\n",
 					SDL_GetError());
@@ -277,6 +276,7 @@ int main(int argc, char* args[]) {
 		} else {
 			//Main loop flag
 			bool quit = false;
+			bool draw = true;
 
 			//Event handler
 			SDL_Event e;
@@ -290,57 +290,61 @@ int main(int argc, char* args[]) {
 						quit = true;
 					}
 				}
-				//Clear screen
-				SDL_SetRenderDrawColor(gRenderer, 180, 80, 10, 0); //brown/dark/
-				SDL_RenderClear(gRenderer);
+				if (draw) {
+					//Clear screen
+					SDL_SetRenderDrawColor(gRenderer, 180, 80, 10, 0); //brown/dark/
+					SDL_RenderClear(gRenderer);
 
-				for (int x = 0; x < QUAD_WIDTH * 8; x = x + QUAD_WIDTH) {
-					bool odd = ((x / 80) % 2 == 1);  //the chessboard have to start with white
-					for (int y = QUAD_HEIGHT * odd;
-							y < QUAD_HEIGHT * 8;
-							y = y + (2 * QUAD_HEIGHT)) {
+					for (int x = 0; x < QUAD_WIDTH * 8; x = x + QUAD_WIDTH) {
+						bool odd = ((x / 80) % 2 == 1); //the chessboard have to start with white
+						for (int y = QUAD_HEIGHT * odd; y < QUAD_HEIGHT * 8;
+								y = y + (2 * QUAD_HEIGHT)) {
 
-						SDL_Rect fillRect = { x, y, SCREEN_WIDTH / 8,
-								SCREEN_HEIGHT / 8 };
-						SDL_SetRenderDrawColor(gRenderer, 230, 180, 150, 0); //white/light
-						SDL_RenderFillRect(gRenderer, &fillRect);
+							SDL_Rect fillRect = { x, y, SCREEN_WIDTH / 8,
+									SCREEN_HEIGHT / 8 };
+							SDL_SetRenderDrawColor(gRenderer, 230, 180, 150, 0); //white/light
+							SDL_RenderFillRect(gRenderer, &fillRect);
+						}
 					}
+
+					int step = 80;
+					for (int i = 0; i < 8; i++) {  //pawns
+						gSpriteSheetTexture.render((i * step), step,
+								&gSpriteClips[5]);  // black
+						gSpriteSheetTexture.render((i * step), (6 * step),
+								&gSpriteClips[11]);  //white
+					}
+
+					gSpriteSheetTexture.render(0, 0, &gSpriteClips[4]); //rook, black
+					gSpriteSheetTexture.render((7 * step), 0, &gSpriteClips[4]); //black
+					gSpriteSheetTexture.render(0, (7 * step),
+							&gSpriteClips[10]); //white
+					gSpriteSheetTexture.render((7 * step), (7 * step),
+							&gSpriteClips[10]); //white
+
+					gSpriteSheetTexture.render(step, 0, &gSpriteClips[3]); //knight/horse/, black
+					gSpriteSheetTexture.render((6 * step), 0, &gSpriteClips[3]); //black
+					gSpriteSheetTexture.render(step, (7 * step),
+							&gSpriteClips[9]); //white
+					gSpriteSheetTexture.render((6 * step), (7 * step),
+							&gSpriteClips[9]);  //white
+
+					gSpriteSheetTexture.render((2 * step), 0, &gSpriteClips[2]); //bishop/officer/, black
+					gSpriteSheetTexture.render((5 * step), 0, &gSpriteClips[2]); //black
+					gSpriteSheetTexture.render((2 * step), (7 * step),
+							&gSpriteClips[8]);  //white
+					gSpriteSheetTexture.render((5 * step), (7 * step),
+							&gSpriteClips[8]);  //white
+
+					gSpriteSheetTexture.render((3 * step), 0, &gSpriteClips[1]); //queen, black
+					gSpriteSheetTexture.render((3 * step), (7 * step),
+							&gSpriteClips[7]); //queen, white
+					gSpriteSheetTexture.render((4 * step), 0, &gSpriteClips[0]); //king, black
+					gSpriteSheetTexture.render((4 * step), (7 * step),
+							&gSpriteClips[6]); //king, white
+
+					draw = false;
 				}
-
-				int step = 80;
-				for (int i = 0; i < 8; i++) {  //pawns
-					gSpriteSheetTexture.render((i * step), step,
-							&gSpriteClips[5]);  // black
-					gSpriteSheetTexture.render((i * step), (6 * step),
-							&gSpriteClips[11]);  //white
-				}
-
-				gSpriteSheetTexture.render(0, 0, &gSpriteClips[4]); //rook, black
-				gSpriteSheetTexture.render((7 * step), 0, &gSpriteClips[4]); //black
-				gSpriteSheetTexture.render(0, (7 * step), &gSpriteClips[10]); //white
-				gSpriteSheetTexture.render((7 * step), (7 * step),
-						&gSpriteClips[10]); //white
-
-				gSpriteSheetTexture.render(step, 0, &gSpriteClips[3]); //knight/horse/, black
-				gSpriteSheetTexture.render((6 * step), 0, &gSpriteClips[3]); //black
-				gSpriteSheetTexture.render(step, (7 * step), &gSpriteClips[9]); //white
-				gSpriteSheetTexture.render((6 * step), (7 * step),
-						&gSpriteClips[9]);  //white
-
-				gSpriteSheetTexture.render((2 * step), 0, &gSpriteClips[2]); //bishop/officer/, black
-				gSpriteSheetTexture.render((5 * step), 0, &gSpriteClips[2]); //black
-				gSpriteSheetTexture.render((2 * step), (7 * step),
-						&gSpriteClips[8]);  //white
-				gSpriteSheetTexture.render((5 * step), (7 * step),
-						&gSpriteClips[8]);  //white
-
-				gSpriteSheetTexture.render((3 * step), 0, &gSpriteClips[1]); //queen, black
-				gSpriteSheetTexture.render((3 * step), (7 * step),
-						&gSpriteClips[7]); //queen, white
-				gSpriteSheetTexture.render((4 * step), 0, &gSpriteClips[0]); //king, black
-				gSpriteSheetTexture.render((4 * step), (7 * step),
-						&gSpriteClips[6]); //king, white
-
 				//Update screen
 				SDL_RenderPresent(gRenderer);
 			}
