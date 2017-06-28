@@ -1,0 +1,20 @@
+<Pharmacy> 
+    <Medicine>
+        <name>Analgin</name>
+        <type>Green</type>
+        <quantity>100</quantity>
+        <price>2.10</price>
+    </Medicine>
+    <Medicine>
+        <name>Penicilin</name>
+        <type>Blue</type>
+        <quantity>80</quantity>
+        <price>7.10</price>
+    </Medicine>  
+    <Medicine>
+        <name>Spazmalgone</name>
+        <type>Normal</type>
+        <quantity>120</quantity>
+        <price>2.90</price>
+    </Medicine>
+</Pharmacy>
