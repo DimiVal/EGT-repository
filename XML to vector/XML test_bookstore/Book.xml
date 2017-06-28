@@ -1,0 +1,33 @@
+<books>
+		<book category="Science">
+			<title lang="us-ch">A Modern Course in University Physics 
+</title>
+			<author>Fuxiang Han</author>
+			<year>2017</year>
+			<price>22.40</price>
+		</book>
+		<book category="Children'sLiterature">
+			<title lang="us">Тhe little Prince</title>
+			<author>J K. Rowling</author>
+			<year>2016</year>
+			<price>15.80</price>
+		</book>
+		<book category="Children'sLiterature">
+			<title lang="en-us">Winnie the Pooh</title>
+			<author>A. A. Miln</author>
+			<year>2015</year>
+			<price>12.60</price>
+		</book>
+		<book category="LoveNovels">
+			<title lang="en">Gone with the Wind</title>
+			<author>Margaret Mitchell</author>
+			<year>2011</year>
+			<price>35.20</price>
+		</book>
+		<book category="LoveNovels">
+			<title lang="us-en-sp">Love in the Time of Cholera</title>
+			<author>Gabriel Garcia Marquez</author>
+			<year>2010</year>
+			<price>29.90</price>
+		</book>
+</books>
